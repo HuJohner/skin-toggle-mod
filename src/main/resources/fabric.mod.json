@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "skin-toggle-mod",
+  "version": "${version}",
+  "name": "Skin Toggle Mod",
+  "description": "",
+  "authors": [
+    "HuJohner"
+  ],
+  "contact": {
+    "website": "https://www.youtube.com/c/HuJohner"
+  },
+  "license": "MIT",
+  "icon": "assets/skin-toggle-mod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.hujohner.skintogglemod.client.SkinToggleModClient"
+    ],
+    "main": [
+      "org.hujohner.skintogglemod.SkinToggleMod"
+    ]
+  },
+  "mixins": [
+    "skin-toggle-mod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.8",
+    "fabric": "*",
+    "minecraft": "1.16.4",
+    "fabric-key-binding-api-v1": "*"
+  }
+}
