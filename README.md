@@ -5,7 +5,7 @@ My old version of this mod used to be called "Skin Customisation Key Binded Mod"
 
 ### Downloads
 
-You can find downloads for this mod on either the [official CurseForge page](https://www.curseforge.com/minecraft/mc-mods/skin-toggle-mod)
+You can find downloads for this mod on either the [official CurseForge page](https://www.curseforge.com/minecraft/mc-mods/skin-toggle-mod-fabric)
 or through the [GitHub releases page](https://github.com/hujohner/skin-toggle-mod/releases).
 
 ### Installation instructions
