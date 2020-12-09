@@ -9,6 +9,11 @@ import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Environment(EnvType.CLIENT)
 public class SkinToggleModClient implements ClientModInitializer {
 
@@ -19,47 +24,47 @@ public class SkinToggleModClient implements ClientModInitializer {
     public final KeyBinding keyToggleLegLeft;
     public final KeyBinding keyToggleLegRight;
     public final KeyBinding keyToggleHead;
+    public final Map<KeyBinding, PlayerModelPart> keysSkinToggle;
 
     public SkinToggleModClient() {
+        keysSkinToggle = new HashMap<>();
         keyToggleCape = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-cape", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleCape, PlayerModelPart.CAPE);
         keyToggleTorso = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-torso", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleTorso, PlayerModelPart.JACKET);
         keyToggleArmLeft = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-arm-left", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleArmLeft, PlayerModelPart.LEFT_SLEEVE);
         keyToggleArmRight = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-arm-right", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleArmRight, PlayerModelPart.RIGHT_SLEEVE);
         keyToggleLegLeft = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-leg-left", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleLegLeft, PlayerModelPart.LEFT_PANTS_LEG);
         keyToggleLegRight = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-leg-right", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleLegRight, PlayerModelPart.RIGHT_PANTS_LEG);
         keyToggleHead = KeyBindingHelper.registerKeyBinding(
                 new KeyBinding("key.skin-toggle-mod.skin-custom-head", InputUtil.UNKNOWN_KEY.getCode(), "key.category.skin-customization"));
+        keysSkinToggle.put(keyToggleHead, PlayerModelPart.HAT);
     }
 
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (keyToggleCape.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.CAPE);
+            Map<InputUtil.Key, List<KeyBinding>> multiBinding = new HashMap<>();
+            for (KeyBinding kb : keysSkinToggle.keySet()) {
+                multiBinding.computeIfAbsent(InputUtil.fromTranslationKey(kb.getBoundKeyTranslationKey()), l -> new ArrayList<>()).add(kb);
             }
-            while (keyToggleTorso.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.JACKET);
-            }
-            while (keyToggleArmLeft.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.LEFT_SLEEVE);
-            }
-            while (keyToggleArmRight.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.RIGHT_SLEEVE);
-            }
-            while (keyToggleLegLeft.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.LEFT_PANTS_LEG);
-            }
-            while (keyToggleLegRight.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.RIGHT_PANTS_LEG);
-            }
-            while (keyToggleHead.wasPressed()) {
-                client.options.togglePlayerModelPart(PlayerModelPart.HAT);
+
+            for (KeyBinding kb : keysSkinToggle.keySet()) {
+                if (kb.wasPressed()) {
+                    for (KeyBinding key : multiBinding.get(InputUtil.fromTranslationKey(kb.getBoundKeyTranslationKey()))) {
+                        client.options.togglePlayerModelPart(keysSkinToggle.get(key));
+                    }
+                }
             }
         });
     }
