@@ -22,6 +22,9 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
+#### Version 1.2
+Updated to Minecraft 1.16.5
+
 #### Version 1.1
 Added ability to bind multiple skin customization toggles to one key.  
 *Note that this only works if the duplicate key is used only in the skin customization bindings.*
