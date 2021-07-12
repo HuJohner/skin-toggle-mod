@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
 
@@ -62,7 +62,9 @@ public class SkinToggleModClient implements ClientModInitializer {
             for (KeyBinding kb : keysSkinToggle.keySet()) {
                 if (kb.wasPressed()) {
                     for (KeyBinding key : multiBinding.get(InputUtil.fromTranslationKey(kb.getBoundKeyTranslationKey()))) {
-                        client.options.togglePlayerModelPart(keysSkinToggle.get(key));
+                        PlayerModelPart part = keysSkinToggle.get(key);
+                        boolean isPartEnabled = client.options.isPlayerModelPartEnabled(part);
+                        client.options.togglePlayerModelPart(part, !isPartEnabled);
                     }
                 }
             }
