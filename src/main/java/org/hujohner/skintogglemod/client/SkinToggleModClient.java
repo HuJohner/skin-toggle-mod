@@ -5,7 +5,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.LiteralText;
@@ -68,13 +68,14 @@ public class SkinToggleModClient implements ClientModInitializer {
                 if (kb.wasPressed()) {
                     LiteralText toggled = new LiteralText("");
                     for (KeyBinding key : multiBinding.get(InputUtil.fromTranslationKey(kb.getBoundKeyTranslationKey()))) {
-                        client.options.togglePlayerModelPart(keysSkinToggle.get(key));
+                        PlayerModelPart part = keysSkinToggle.get(key);
+                        client.options.togglePlayerModelPart(part, !client.options.isPlayerModelPartEnabled(part));
                         if (announceToggle) {
                             if (!toggled.getString().isEmpty()) {
                                 toggled.append(", ");
                             }
                             TextColor colour = TextColor.parse("red");
-                            if (client.options.getEnabledPlayerModelParts().contains(keysSkinToggle.get(key))) {
+                            if (client.options.isPlayerModelPartEnabled(part)) {
                                 colour = TextColor.parse("green");
                             }
                             toggled.append(keysSkinToggle.get(key).getOptionName().copy()
