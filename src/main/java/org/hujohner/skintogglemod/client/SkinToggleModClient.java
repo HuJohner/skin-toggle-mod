@@ -5,9 +5,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
+import net.minecraft.text.TextColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +56,8 @@ public class SkinToggleModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        boolean announceToggle = true; // TODO add option
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             Map<InputUtil.Key, List<KeyBinding>> multiBinding = new HashMap<>();
             for (KeyBinding kb : keysSkinToggle.keySet()) {
@@ -61,8 +66,24 @@ public class SkinToggleModClient implements ClientModInitializer {
 
             for (KeyBinding kb : keysSkinToggle.keySet()) {
                 if (kb.wasPressed()) {
+                    LiteralText toggled = new LiteralText("");
                     for (KeyBinding key : multiBinding.get(InputUtil.fromTranslationKey(kb.getBoundKeyTranslationKey()))) {
-                        client.options.togglePlayerModelPart(keysSkinToggle.get(key));
+                        PlayerModelPart part = keysSkinToggle.get(key);
+                        client.options.togglePlayerModelPart(part, !client.options.isPlayerModelPartEnabled(part));
+                        if (announceToggle) {
+                            if (!toggled.getString().isEmpty()) {
+                                toggled.append(", ");
+                            }
+                            TextColor colour = TextColor.parse("red");
+                            if (client.options.isPlayerModelPartEnabled(part)) {
+                                colour = TextColor.parse("green");
+                            }
+                            toggled.append(keysSkinToggle.get(key).getOptionName().copy()
+                                    .fillStyle(Style.EMPTY.withColor(colour)));
+                        }
+                    }
+                    if (client.player != null && announceToggle) {
+                        client.player.sendMessage(toggled, true);
                     }
                 }
             }

@@ -22,6 +22,14 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
+#### Version 1.4
+Updated to Minecraft 1.18.2
+
+#### Version 1.3
+Added announcing toggles.
+When toggling it you can now show the current state of the player model part in the action bar.
+This can be turned on in the settings.
+
 #### Version 1.2
 Updated to Minecraft 1.16.5
 
