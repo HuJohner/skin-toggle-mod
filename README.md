@@ -22,6 +22,9 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
+#### Version 1.6
+Updated to Minecraft 1.20.1
+
 #### Version 1.5
 Updated to Minecraft 1.19.2
 
