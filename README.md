@@ -22,27 +22,30 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
-#### Version 1.6
+#### Version 1.2.0+1.20.2
+Updated to Minecraft 1.20.2
+
+#### Version 1.6 (1.2.0+1.20.1)
 Updated to Minecraft 1.20.1
 
-#### Version 1.5
+#### Version 1.5 (1.2.0+1.19.2)
 Updated to Minecraft 1.19.2
 
-#### Version 1.4
+#### Version 1.4 (1.2.0+1.18.2)
 Updated to Minecraft 1.18.2
 
-#### Version 1.3
+#### Version 1.3 (1.2.0+1.16.5)
 Added announcing toggles.
 When toggling it you can now show the current state of the player model part in the action bar.
 This can be turned on in the settings.
 
-#### Version 1.2
+#### Version 1.2 (1.1.0+1.16.5)
 Updated to Minecraft 1.16.5
 
-#### Version 1.1
+#### Version 1.1 (1.1.0+1.16.4)
 Added ability to bind multiple skin customization toggles to one key.  
 *Note that this only works if the duplicate key is used only in the skin customization bindings.*
 *The keys will be highlighted red to show that there are other bindings using the same key.*
 
-#### Version 1.0
+#### Version 1.0 (1.0.0+1.16.4)
 Initial release
