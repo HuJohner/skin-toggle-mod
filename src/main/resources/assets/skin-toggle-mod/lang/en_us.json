@@ -6,5 +6,9 @@
   "key.skin-toggle-mod.skin-custom-arm-right": "Toggle Right Sleeve",
   "key.skin-toggle-mod.skin-custom-leg-left": "Toggle Left Pants Leg",
   "key.skin-toggle-mod.skin-custom-leg-right": "Toggle Right Pants Leg",
-  "key.skin-toggle-mod.skin-custom-head": "Toggle Hat"
+  "key.skin-toggle-mod.skin-custom-head": "Toggle Hat",
+  "options.skinCustomisation.skin-toggle-mod.announceToggle": "Announce Toggle",
+  "options.skinCustomisation.skin-toggle-mod.announceToggle.none": "None",
+  "options.skinCustomisation.skin-toggle-mod.announceToggle.chat": "Chat",
+  "options.skinCustomisation.skin-toggle-mod.announceToggle.actionbar": "Action Bar"
 }
