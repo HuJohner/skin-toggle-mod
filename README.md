@@ -22,6 +22,9 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
+#### Version 1.2.1+1.20.2
+Added announce toggles option
+
 #### Version 1.2.0+1.20.2
 Updated to Minecraft 1.20.2
 
