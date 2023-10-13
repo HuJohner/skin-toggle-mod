@@ -10,5 +10,11 @@
   "options.skinCustomisation.skin-toggle-mod.announceToggle": "Announce Toggle",
   "options.skinCustomisation.skin-toggle-mod.announceToggle.none": "None",
   "options.skinCustomisation.skin-toggle-mod.announceToggle.chat": "Chat",
-  "options.skinCustomisation.skin-toggle-mod.announceToggle.actionbar": "Action Bar"
+  "options.skinCustomisation.skin-toggle-mod.announceToggle.actionbar": "Action Bar",
+  "options.skinCustomisation.skin-toggle-mod.hud": "HUD",
+  "options.skinCustomisation.skin-toggle-mod.hud.none": "None",
+  "options.skinCustomisation.skin-toggle-mod.hud.topleft": "Top Left",
+  "options.skinCustomisation.skin-toggle-mod.hud.topright": "Top Right",
+  "options.skinCustomisation.skin-toggle-mod.hud.bottomleft": "Bottom Left",
+  "options.skinCustomisation.skin-toggle-mod.hud.bottomright": "Bottom Right"
 }
