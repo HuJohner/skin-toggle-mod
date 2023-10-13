@@ -35,13 +35,44 @@ public abstract class SkinOptionsScreenMixin extends ScreenMixin {
                 .values((Object[])SkinToggleMod.AnnounceType.values())
                 .initially(SkinToggleMod.announceToggle)
                 .build(
-                        instance.width / 2 - 100,
+                        instance.width / 2 - 155,
                         instance.height / 6,
-                        200,
+                        150,
                         20,
                         Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle"),
                         (button, value) -> SkinToggleMod.announceToggle = (SkinToggleMod.AnnounceType)value
                 )
+        );
+        this.addDrawableChild(
+                CyclingButtonWidget.builder(value -> {
+                            switch ((SkinToggleMod.HudType)value) {
+                                case TOP_LEFT -> {
+                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.topleft");
+                                }
+                                case TOP_RIGHT -> {
+                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.topright");
+                                }
+                                case BOTTOM_LEFT -> {
+                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomleft");
+                                }
+                                case BOTTOM_RIGHT -> {
+                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomright");
+                                }
+                                default -> {
+                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.none");
+                                }
+                            }
+                        })
+                        .values((Object[])SkinToggleMod.HudType.values())
+                        .initially(SkinToggleMod.hud)
+                        .build(
+                                instance.width / 2 - 155 + 160,
+                                instance.height / 6,
+                                150,
+                                20,
+                                Text.translatable("options.skinCustomisation.skin-toggle-mod.hud"),
+                                (button, value) -> SkinToggleMod.hud = (SkinToggleMod.HudType)value
+                        )
         );
 
         return 2; // start i from 2 to skip first line

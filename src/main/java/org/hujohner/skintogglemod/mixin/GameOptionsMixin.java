@@ -20,5 +20,11 @@ public abstract class GameOptionsMixin {
             SkinToggleMod.AnnounceType::byName,
             SkinToggleMod.AnnounceType::getName
         );
+        SkinToggleMod.hud = visitor.visitObject(
+                "skin_toggle_mod.hud",
+                SkinToggleMod.hud,
+                SkinToggleMod.HudType::byName,
+                SkinToggleMod.HudType::getName
+        );
     }
 }

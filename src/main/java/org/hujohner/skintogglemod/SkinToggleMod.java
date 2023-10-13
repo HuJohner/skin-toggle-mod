@@ -20,6 +20,7 @@ public class SkinToggleMod implements ModInitializer {
     public static final Map<InputUtil.Key, List<KeyBinding>> KEY_TO_BINDINGS = Maps.newHashMap();
 
     public static AnnounceType announceToggle = AnnounceType.ACTION_BAR;
+    public static HudType hud = HudType.TOP_LEFT;
 
     public KeyBinding keyToggleCape;
     public KeyBinding keyToggleTorso;
@@ -85,6 +86,42 @@ public class SkinToggleMod implements ModInitializer {
             for (AnnounceType announceType : values()) {
                 if (announceType.name.equals(name)) {
                     return announceType;
+                }
+            }
+
+            return NONE;
+        }
+    }
+
+    /**
+     * Options for HUD positions.
+     * <li>NONE: no HUD</li>
+     * <li>TOP_LEFT: top left</li>
+     * <li>TOP_RIGHT: top right</li>
+     * <li>BOTTOM_LEFT: bottom left</li>
+     * <li>BOTTOM_RIGHT: bottom right</li>
+     */
+    public enum HudType {
+        NONE("none"),
+        TOP_LEFT("topleft"),
+        TOP_RIGHT("topright"),
+        BOTTOM_LEFT("bottomleft"),
+        BOTTOM_RIGHT("bottomright");
+
+        private final String name;
+
+        HudType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public static HudType byName(String name) {
+            for (HudType hudType : values()) {
+                if (hudType.name.equals(name)) {
+                    return hudType;
                 }
             }
 
