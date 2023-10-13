@@ -22,8 +22,11 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 
 ### Changelog
 
+#### Version 1.2.3+1.20.2
+Reverted accidental change to announce all parts 
+
 #### Version 1.2.2+1.20.2
-Duplicate skin toggle key bindings no longer show errors
+Duplicate skin toggle key bindings no longer show errors  
 Added HUD overlay to show enabled skin parts
 
 #### Version 1.2.1+1.20.2
@@ -42,8 +45,8 @@ Updated to Minecraft 1.19.2
 Updated to Minecraft 1.18.2
 
 #### Version 1.3 (1.2.0+1.16.5)
-Added announcing toggles.
-When toggling it you can now show the current state of the player model part in the action bar.
+Added announcing toggles.  
+When toggling it you can now show the current state of the player model part in the action bar.  
 This can be turned on in the settings.
 
 #### Version 1.2 (1.1.0+1.16.5)

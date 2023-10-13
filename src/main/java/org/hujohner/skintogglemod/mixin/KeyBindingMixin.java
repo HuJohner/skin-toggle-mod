@@ -42,25 +42,23 @@ public abstract class KeyBindingMixin {
             MinecraftClient client = MinecraftClient.getInstance();
 
             // update skin toggles
+            MutableText toggled = MutableText.of(new LiteralTextContent(""));
             SkinToggleMod.KEY_TO_BINDINGS.get(key).forEach(keyBinding -> {
                 PlayerModelPart part = SkinToggleMod.BINDING_TO_PART.get(keyBinding);
                 client.options.togglePlayerModelPart(part, !client.options.isPlayerModelPartEnabled(part));
-            });
 
-            // announce toggles
-            if (SkinToggleMod.announceToggle != SkinToggleMod.AnnounceType.NONE && client.player != null) {
-                MutableText toggled = MutableText.of(new LiteralTextContent(""));
-                for (Map.Entry<KeyBinding, PlayerModelPart> entry : SkinToggleMod.BINDING_TO_PART.entrySet()) {
-                    if (!toggled.getString().isEmpty()) {
-                        toggled.append(", ");
-                    }
-                    TextColor colour = TextColor.parse("red");
-                    if (client.options.isPlayerModelPartEnabled(entry.getValue())) {
-                        colour = TextColor.parse("green");
-                    }
-                    toggled.append(entry.getValue().getOptionName().copy()
-                            .fillStyle(Style.EMPTY.withColor(colour)));
+                // announce toggles
+                if (!toggled.getString().isEmpty()) {
+                    toggled.append(", ");
                 }
+                TextColor colour = TextColor.parse("red");
+                if (client.options.isPlayerModelPartEnabled(part)) {
+                    colour = TextColor.parse("green");
+                }
+                toggled.append(part.getOptionName().copy()
+                        .fillStyle(Style.EMPTY.withColor(colour)));
+            });
+            if (SkinToggleMod.announceToggle != SkinToggleMod.AnnounceType.NONE && client.player != null) {
                 client.player.sendMessage(toggled, SkinToggleMod.announceToggle == SkinToggleMod.AnnounceType.ACTION_BAR);
             }
         }
