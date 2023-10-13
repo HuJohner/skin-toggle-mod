@@ -23,6 +23,9 @@ You will also need the official [Fabric API](https://www.curseforge.com/minecraf
 ### Changelog
 
 #### Version 1.2.1+1.20.2
+Duplicate skin toggle key bindings no longer show errors
+
+#### Version 1.2.1+1.20.2
 Added announce toggles option
 
 #### Version 1.2.0+1.20.2

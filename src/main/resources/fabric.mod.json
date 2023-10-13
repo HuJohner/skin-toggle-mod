@@ -14,9 +14,6 @@
   "icon": "assets/skin-toggle-mod/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "org.hujohner.skintogglemod.client.SkinToggleModClient"
-    ],
     "main": [
       "org.hujohner.skintogglemod.SkinToggleMod"
     ]
