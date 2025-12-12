@@ -4,8 +4,9 @@ import com.google.common.collect.Maps;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.entity.PlayerModelPart;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Map;
@@ -32,32 +33,33 @@ public class SkinToggleMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        KeyBinding.Category category = KeyBinding.Category.create(Identifier.of(CATEGORY_ID));
         keyToggleCape = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-cape", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-cape", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleCape, PlayerModelPart.CAPE);
 
         keyToggleTorso = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-torso", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-torso", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleTorso, PlayerModelPart.JACKET);
 
         keyToggleArmLeft = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-arm-left", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-arm-left", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleArmLeft, PlayerModelPart.LEFT_SLEEVE);
 
         keyToggleArmRight = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-arm-right", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-arm-right", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleArmRight, PlayerModelPart.RIGHT_SLEEVE);
 
         keyToggleLegLeft = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-leg-left", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-leg-left", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleLegLeft, PlayerModelPart.LEFT_PANTS_LEG);
 
         keyToggleLegRight = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-leg-right", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-leg-right", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleLegRight, PlayerModelPart.RIGHT_PANTS_LEG);
 
         keyToggleHead = KeyBindingHelper.registerKeyBinding(
-                new KeyBinding("key.skin-toggle-mod.skin-custom-head", InputUtil.UNKNOWN_KEY.getCode(), CATEGORY_ID));
+                new KeyBinding("key.skin-toggle-mod.skin-custom-head", InputUtil.UNKNOWN_KEY.getCode(), category));
         BINDING_TO_PART.put(keyToggleHead, PlayerModelPart.HAT);
     }
 

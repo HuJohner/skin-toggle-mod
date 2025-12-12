@@ -7,7 +7,6 @@
   ],
   "client": [
     "GameOptionsMixin",
-    "KeyBindingEntryMixin",
     "KeyBindingMixin",
     "ScreenMixin",
     "SkinOptionsScreenMixin"

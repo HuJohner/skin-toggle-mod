@@ -3,7 +3,8 @@ package org.hujohner.skintogglemod.client;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.entity.PlayerModelPart;
+import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.util.Formatting;
 import org.hujohner.skintogglemod.SkinToggleMod;
 
@@ -19,10 +20,10 @@ public class SkinToggleHudOverlay implements HudRenderCallback {
      * Each part is coloured red or green based on whether the respective
      * skin part is enabled.
      * @param drawContext the {@link DrawContext} instance
-     * @param tickDelta Progress for linearly interpolating between the previous and current game state
+     * @param tickCounter Progress for linearly interpolating between the previous and current game state
      */
     @Override
-    public void onHudRender(DrawContext drawContext, float tickDelta) {
+    public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
         if (SkinToggleMod.hud == SkinToggleMod.HudType.NONE) {
             return;
         }

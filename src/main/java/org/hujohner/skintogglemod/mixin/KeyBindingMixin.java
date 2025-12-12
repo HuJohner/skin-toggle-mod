@@ -1,14 +1,15 @@
 package org.hujohner.skintogglemod.mixin;
 
-import net.fabricmc.fabric.mixin.client.keybinding.KeyBindingAccessor;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.entity.PlayerModelPart;
+import net.minecraft.entity.player.PlayerModelPart;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import net.minecraft.util.Formatting;
 import org.hujohner.skintogglemod.SkinToggleMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,12 +28,10 @@ public abstract class KeyBindingMixin {
     private static void updateHook(CallbackInfo ci) {
         SkinToggleMod.KEY_TO_BINDINGS.clear();
         SkinToggleMod.BINDING_TO_PART.keySet().forEach(keyBinding -> {
-            if (keyBinding instanceof KeyBindingAccessor) {
-                InputUtil.Key key = ((KeyBindingAccessor) keyBinding).fabric_getBoundKey();
-                List<KeyBinding> keyBindings = SkinToggleMod.KEY_TO_BINDINGS.getOrDefault(key, new ArrayList<>());
-                keyBindings.add(keyBinding);
-                SkinToggleMod.KEY_TO_BINDINGS.put(key, keyBindings);
-            }
+            InputUtil.Key key = KeyBindingHelper.getBoundKeyOf(keyBinding);
+            List<KeyBinding> keyBindings = SkinToggleMod.KEY_TO_BINDINGS.getOrDefault(key, new ArrayList<>());
+            keyBindings.add(keyBinding);
+            SkinToggleMod.KEY_TO_BINDINGS.put(key, keyBindings);
         });
     }
 
@@ -42,18 +41,18 @@ public abstract class KeyBindingMixin {
             MinecraftClient client = MinecraftClient.getInstance();
 
             // update skin toggles
-            MutableText toggled = MutableText.of(new LiteralTextContent(""));
+            MutableText toggled = Text.literal("");
             SkinToggleMod.KEY_TO_BINDINGS.get(key).forEach(keyBinding -> {
                 PlayerModelPart part = SkinToggleMod.BINDING_TO_PART.get(keyBinding);
-                client.options.togglePlayerModelPart(part, !client.options.isPlayerModelPartEnabled(part));
+                client.options.setPlayerModelPart(part, !client.options.isPlayerModelPartEnabled(part));
 
                 // announce toggles
                 if (!toggled.getString().isEmpty()) {
                     toggled.append(", ");
                 }
-                TextColor colour = TextColor.parse("red");
+                TextColor colour = TextColor.fromFormatting(Formatting.RED);
                 if (client.options.isPlayerModelPartEnabled(part)) {
-                    colour = TextColor.parse("green");
+                    colour = TextColor.fromFormatting(Formatting.GREEN);
                 }
                 toggled.append(part.getOptionName().copy()
                         .fillStyle(Style.EMPTY.withColor(colour)));

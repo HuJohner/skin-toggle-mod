@@ -1,6 +1,7 @@
 package org.hujohner.skintogglemod.mixin;
 
 import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.text.Text;
 import org.hujohner.skintogglemod.SkinToggleMod;
@@ -8,17 +9,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import java.util.List;
+
 /**
  * Mixin to the {@link SkinOptionsScreen} class to add UI elements before other UI elements.
  */
 @Mixin(SkinOptionsScreen.class)
 public abstract class SkinOptionsScreenMixin extends ScreenMixin {
-    @ModifyVariable(method = "init", at = @At(value = "STORE"), ordinal = 0)
-    public int addButton(int i) {
+    @ModifyVariable(method = "addOptions", at = @At(value = "STORE"), ordinal = 0)
+    public List<ClickableWidget> addButton(List<ClickableWidget> list) {
         SkinOptionsScreen instance = (SkinOptionsScreen) (Object) this;
 
         // add button in first line
-        this.addDrawableChild(
+        list.add(
             CyclingButtonWidget.builder(value -> {
                     switch ((SkinToggleMod.AnnounceType)value) {
                         case CHAT -> {
@@ -31,9 +34,8 @@ public abstract class SkinOptionsScreenMixin extends ScreenMixin {
                             return Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.none");
                         }
                     }
-                })
-                .values((Object[])SkinToggleMod.AnnounceType.values())
-                .initially(SkinToggleMod.announceToggle)
+                }, SkinToggleMod.announceToggle)
+                .values(SkinToggleMod.AnnounceType.values())
                 .build(
                         instance.width / 2 - 155,
                         instance.height / 6,
@@ -43,7 +45,7 @@ public abstract class SkinOptionsScreenMixin extends ScreenMixin {
                         (button, value) -> SkinToggleMod.announceToggle = (SkinToggleMod.AnnounceType)value
                 )
         );
-        this.addDrawableChild(
+        list.add(
                 CyclingButtonWidget.builder(value -> {
                             switch ((SkinToggleMod.HudType)value) {
                                 case TOP_LEFT -> {
@@ -62,9 +64,8 @@ public abstract class SkinOptionsScreenMixin extends ScreenMixin {
                                     return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.none");
                                 }
                             }
-                        })
-                        .values((Object[])SkinToggleMod.HudType.values())
-                        .initially(SkinToggleMod.hud)
+                        }, SkinToggleMod.hud)
+                        .values(SkinToggleMod.HudType.values())
                         .build(
                                 instance.width / 2 - 155 + 160,
                                 instance.height / 6,
@@ -75,6 +76,6 @@ public abstract class SkinOptionsScreenMixin extends ScreenMixin {
                         )
         );
 
-        return 2; // start i from 2 to skip first line
+        return list;
     }
 }
