@@ -56,6 +56,7 @@ public abstract class KeyBindingMixin {
                 toggled.append(part.getName().copy()
                         .withStyle(Style.EMPTY.withColor(colour)));
             });
+            client.options.broadcastOptions();
             if (SkinToggleMod.announceToggle != SkinToggleMod.AnnounceType.NONE && client.player != null) {
                 client.player.displayClientMessage(toggled, SkinToggleMod.announceToggle == SkinToggleMod.AnnounceType.ACTION_BAR);
             }
