@@ -1,80 +1,83 @@
 package org.hujohner.skintogglemod.mixin;
 
-import net.minecraft.client.gui.screen.option.SkinOptionsScreen;
-import net.minecraft.client.gui.widget.CyclingButtonWidget;
-import net.minecraft.text.Text;
 import org.hujohner.skintogglemod.SkinToggleMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.screens.options.SkinCustomizationScreen;
+import net.minecraft.network.chat.Component;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Mixin to the {@link SkinOptionsScreen} class to add UI elements before other UI elements.
+ * Mixin to the {@link SkinCustomizationScreen} class to add UI elements before other UI elements.
  */
-@Mixin(SkinOptionsScreen.class)
-public abstract class SkinOptionsScreenMixin extends ScreenMixin {
-    @ModifyVariable(method = "init", at = @At(value = "STORE"), ordinal = 0)
-    public int addButton(int i) {
-        SkinOptionsScreen instance = (SkinOptionsScreen) (Object) this;
+@Mixin(SkinCustomizationScreen.class)
+public abstract class SkinOptionsScreenMixin extends OptionsSubScreenMixin {
+    @Inject(method = "addOptions", at = @At(value = "HEAD"))
+    public void addButtons(CallbackInfo ci) {
+        SkinCustomizationScreen instance = (SkinCustomizationScreen) (Object) this;
 
-        // add button in first line
-        this.addDrawableChild(
-            CyclingButtonWidget.builder(value -> {
-                    switch ((SkinToggleMod.AnnounceType)value) {
+        List<AbstractWidget> list = new ArrayList<>();
+        list.add(
+            CycleButton.builder(value -> {
+                    switch (value) {
                         case CHAT -> {
-                            return Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.chat");
+                            return Component.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.chat");
                         }
                         case ACTION_BAR -> {
-                            return Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.actionbar");
+                            return Component.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.actionbar");
                         }
                         default -> {
-                            return Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.none");
+                            return Component.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle.none");
                         }
                     }
-                })
-                .values((Object[])SkinToggleMod.AnnounceType.values())
-                .initially(SkinToggleMod.announceToggle)
-                .build(
+                }, SkinToggleMod.announceToggle)
+                .withValues(SkinToggleMod.AnnounceType.values())
+                .create(
                         instance.width / 2 - 155,
                         instance.height / 6,
                         150,
                         20,
-                        Text.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle"),
-                        (button, value) -> SkinToggleMod.announceToggle = (SkinToggleMod.AnnounceType)value
+                        Component.translatable("options.skinCustomisation.skin-toggle-mod.announceToggle"),
+                        (button, value) -> SkinToggleMod.announceToggle = value
                 )
         );
-        this.addDrawableChild(
-                CyclingButtonWidget.builder(value -> {
-                            switch ((SkinToggleMod.HudType)value) {
+        list.add(
+                CycleButton.builder(value -> {
+                            switch (value) {
                                 case TOP_LEFT -> {
-                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.topleft");
+                                    return Component.translatable("options.skinCustomisation.skin-toggle-mod.hud.topleft");
                                 }
                                 case TOP_RIGHT -> {
-                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.topright");
+                                    return Component.translatable("options.skinCustomisation.skin-toggle-mod.hud.topright");
                                 }
                                 case BOTTOM_LEFT -> {
-                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomleft");
+                                    return Component.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomleft");
                                 }
                                 case BOTTOM_RIGHT -> {
-                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomright");
+                                    return Component.translatable("options.skinCustomisation.skin-toggle-mod.hud.bottomright");
                                 }
                                 default -> {
-                                    return Text.translatable("options.skinCustomisation.skin-toggle-mod.hud.none");
+                                    return Component.translatable("options.skinCustomisation.skin-toggle-mod.hud.none");
                                 }
                             }
-                        })
-                        .values((Object[])SkinToggleMod.HudType.values())
-                        .initially(SkinToggleMod.hud)
-                        .build(
+                        }, SkinToggleMod.hud)
+                        .withValues(SkinToggleMod.HudType.values())
+                        .create(
                                 instance.width / 2 - 155 + 160,
                                 instance.height / 6,
                                 150,
                                 20,
-                                Text.translatable("options.skinCustomisation.skin-toggle-mod.hud"),
-                                (button, value) -> SkinToggleMod.hud = (SkinToggleMod.HudType)value
+                                Component.translatable("options.skinCustomisation.skin-toggle-mod.hud"),
+                                (button, value) -> SkinToggleMod.hud = value
                         )
         );
 
-        return 2; // start i from 2 to skip first line
+        this.list.addSmall(list);
     }
 }

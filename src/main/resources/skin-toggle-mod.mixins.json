@@ -6,10 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "GameOptionsMixin",
-    "KeyBindingEntryMixin",
+    "OptionsMixin",
     "KeyBindingMixin",
-    "ScreenMixin",
+    "OptionsSubScreenMixin",
     "SkinOptionsScreenMixin"
   ],
   "injectors": {
